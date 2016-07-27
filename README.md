@@ -1,0 +1,2 @@
+# Baseball League Web Application
+A series of exercises on how to relate the interface of a CRUD application with their corresponding SQL statements. Writing queries for a small application to keep track of the results of the MLB games.
