@@ -14,11 +14,11 @@ function pageController()
 		$sortBy = Input::get('sort_by');
 		$sql .= " ORDER BY $sortBy";
 	}
-	if (Input::has('page')) {
-		$page = Input::get('page') < 1 ? 1 : Input::get('page');
-		$offset = ($page - 1) * 5;
-		$sql .= " LIMIT 5 OFFSET $offset";
-	}
+
+	$page = Input::get('page') < 1 ? 1 : Input::get('page', 1);
+	$offset = ($page - 1) * 5;
+	$sql .= " LIMIT 5 OFFSET $offset";
+
 	var_dump($sql);
 
 	return [
