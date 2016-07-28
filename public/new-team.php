@@ -3,6 +3,10 @@ require __DIR__ . '/../src/Input.php';
 
 function pageController()
 {
+	$name = '';
+	$stadium = '';
+	$checkedA = '';
+	$checkedN = '';
 	if (Input::isPost()) {
 		$name = Input::get('name');
 		$league = Input::get('league');
@@ -11,10 +15,15 @@ function pageController()
 		// Either interpolate or concatenate the PHP variables
 		$insert = "INSERT INTO teams (name, league, stadium) VALUES('$name', '$league', '$stadium');";
 		// Copy the resulting query and verify that it runs using the terminal
+		$league == 'american' ? $checkedA = 'checked' : $checkedN = 'checked';
 		var_dump($insert);
 	}
 	return [
-		'title' => 'New Team'
+		'title' => 'New Team',
+		'name' => $name,
+		'stadium' => $stadium,
+		'checkedA' => $checkedA,
+		'checkedN' => $checkedN
 	];
 }
 extract(pageController());
@@ -38,6 +47,7 @@ extract(pageController());
 						type="text"
 						class="form-control"
 						name="name"
+						value="<?= $name; ?>"
 						id="name"
 						placeholder="Texas Rangers"
 					>
@@ -50,13 +60,13 @@ extract(pageController());
 				<div class="col-sm-10">
 					<div class="radio">
 						<label>
-							<input type="radio" name="league" value="american" checked>
+							<input type="radio" name="league" value="american" <?= $checkedA; ?>>
 							American
 						</label>
 					</div>
 					<div class="radio">
 						<label>
-							<input type="radio" name="league" value="national">
+							<input type="radio" name="league" value="national" <?= $checkedN; ?>>
 							National
 						</label>
 					</div>
@@ -71,6 +81,7 @@ extract(pageController());
 						type="text"
 						class="form-control"
 						name="stadium"
+						value="<?= $stadium; ?>"
 						id="stadium"
 						placeholder="Globe Life Park"
 					>
