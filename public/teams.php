@@ -14,6 +14,11 @@ function pageController()
 		$sortBy = Input::get('sort_by');
 		$sql .= " ORDER BY $sortBy";
 	}
+	if (Input::has('page')) {
+		$page = Input::get('page');
+		$offset = ($page - 1) * 5;
+		$sql .= " LIMIT 5 OFFSET $offset";
+	}
 	var_dump($sql);
 
 	return [
@@ -50,46 +55,72 @@ extract(pageController());
 		</header>
 		<form method="post" action="delete-teams.php">
 			<table class="table table-striped table-hover table-bordered">
-				<thead>
-					<tr>
-						<th>Delete</th>
-						<th>
-							<a href="?sort_by=team">Team</a>
-						</th>
-						<th>
-							<a href="?sort_by=stadium">Stadium</a>
-						</th>
-						<th>
-							<a href="?sort_by=league">League</a>
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							<input type="checkbox" name="teams[]" value="1">
-						</td>
-						<td>
-							<a href="team-details.php?team_id=1">
-								Red Sox
-							</a>
-						</td>
-						<td>Fenway Park</td>
-						<td>American</td>
-					</tr>
-					<tr>
-						<td>
-							<input type="checkbox" name="teams[]" value="2">
-						</td>
-						<td>
-							<a href="team-details.php?team_id=2">
-								Texas Rangers
-							</a>
-						</td>
-						<td>Global Life Park</td>
-						<td>American</td>
-					</tr>
-				</tbody>
+			<thead>
+				<tr>
+					<th>Delete</th>
+					<th>
+						<a href="?sort_by=team">Team</a>
+					</th>
+					<th>
+						<a href="?sort_by=stadium">Stadium</a>
+					</th>
+					<th>
+						<a href="?sort_by=league">League</a>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<input type="checkbox" name="teams[]" value="1">
+					</td>
+					<td>
+						<a href="team-details.php?team_id=1">
+							Red Sox
+						</a>
+					</td>
+					<td>Fenway Park</td>
+					<td>American</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" name="teams[]" value="2">
+					</td>
+					<td>
+						<a href="team-details.php?team_id=2">
+							Texas Rangers
+						</a>
+					</td>
+					<td>Global Life Park</td>
+					<td>American</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="4">
+						<!-- The values in this pagination control indicate you're currently viewing page 2 -->
+						<nav aria-label="Page navigation" class="text-center">
+							<ul class="pagination">
+								<li>
+									<a href="?page=1" aria-label="Previous">
+										<span aria-hidden="true">&laquo;</span>
+									</a>
+								</li>
+								<li><a href="?page=1">1</a></li>
+								<li><a href="?page=2">2</a></li>
+								<li><a href="?page=3">3</a></li>
+								<li><a href="?page=4">4</a></li>
+								<li><a href="?page=5">5</a></li>
+								<li>
+									<a href="?page=3" aria-label="Next">
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+								</li>
+							</ul>
+						</nav>
+					</td>
+				</tr>
+			</tfoot>
 			</table>
 			<input type="submit" value="Delete" class="btn btn-danger">
 		</form>
