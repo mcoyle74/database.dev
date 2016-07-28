@@ -3,27 +3,21 @@ require __DIR__ . '/../src/Input.php';
 
 function pageController()
 {
-	$name = '';
-	$stadium = '';
-	$checkedA = '';
-	$checkedN = '';
+	$name = Input::get('name', '');
+	$stadium = Input::get('stadium', '');
+	$league = Input::get('league', '');
 	if (Input::isPost()) {
-		$name = Input::get('name');
-		$league = Input::get('league');
-		$stadium = Input::get('stadium');
 		// Write the INSERT statement to insert a team
 		// Either interpolate or concatenate the PHP variables
 		$insert = "INSERT INTO teams (name, league, stadium) VALUES('$name', '$league', '$stadium');";
 		// Copy the resulting query and verify that it runs using the terminal
-		$league == 'american' ? $checkedA = 'checked' : $checkedN = 'checked';
 		var_dump($insert);
 	}
 	return [
 		'title' => 'New Team',
 		'name' => $name,
 		'stadium' => $stadium,
-		'checkedA' => $checkedA,
-		'checkedN' => $checkedN
+		'league' => $league,
 	];
 }
 extract(pageController());
@@ -60,13 +54,13 @@ extract(pageController());
 				<div class="col-sm-10">
 					<div class="radio">
 						<label>
-							<input type="radio" name="league" value="american" <?= $checkedA; ?>>
+							<input type="radio" name="league" value="american" <?php if ($league == 'american') { echo 'checked'; } ?>>
 							American
 						</label>
 					</div>
 					<div class="radio">
 						<label>
-							<input type="radio" name="league" value="national" <?= $checkedN; ?>>
+							<input type="radio" name="league" value="national" <?php if ($league == 'national') { echo 'checked'; } ?>>
 							National
 						</label>
 					</div>
