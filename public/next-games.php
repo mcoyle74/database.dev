@@ -8,10 +8,14 @@ function pageController()
 	if (Input::has('league')) {
 		// Concatenate the WHERE part to retrieve only the games for either the
 		// National league or the American league
+		$league = Input::get('league');
+		$sql .= " AND league = '$league'";
 	}
 	if (Input::has('team')) {
 		// Concatenate the WHERE part to retrieve only the games for teams with
 		// a name similar to the one provided by the user.
+		$team = Input::get('team');
+		$sql .= " AND t.name LIKE '%$team%'";
 	}
 
 	// Copy the generated query and verify that it retrieves the correct values
