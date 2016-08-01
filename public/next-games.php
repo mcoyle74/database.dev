@@ -4,18 +4,18 @@ require __DIR__ . '/../src/Input.php';
 function pageController()
 {
 	// Write the SELECT to retrieve all upcoming games
-	$sql = 'SELECT t.name, tm.name, t.stadium, g.game_date FROM teams t JOIN games g ON t.id = g.local_team_id JOIN teams tm ON tm.id = g.visitor_team_id WHERE g.game_date > CURDATE()';
+	$sql = 'SELECT * FROM games g JOIN teams ht ON g.local_team_id = ht.id JOIN teams vt ON g.visitor_team_id = vt.id WHERE (g.game_date > CURDATE())';
 	if (Input::has('league')) {
 		// Concatenate the WHERE part to retrieve only the games for either the
 		// National league or the American league
 		$league = Input::get('league');
-		$sql .= " AND league = '$league'";
+		$sql .= " AND (league = '$league')";
 	}
 	if (Input::has('team')) {
 		// Concatenate the WHERE part to retrieve only the games for teams with
 		// a name similar to the one provided by the user.
 		$team = Input::get('team');
-		$sql .= " AND t.name LIKE '%$team%'";
+		$sql .= " AND (ht.name LIKE '%$team%' OR vt.name LIKE '%$team%')";
 	}
 
 	// Copy the generated query and verify that it retrieves the correct values
