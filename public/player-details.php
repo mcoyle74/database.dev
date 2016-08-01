@@ -15,8 +15,12 @@ function pageController()
         // $teams = ...
     }
     // The player's identifier should be in the query string
-    $teamId = Input::get('player_id');
-    $sql = '';
+    $playerId = Input::get('player_id');
+    $sql = "SELECT p.name, p.position, t.name, t.league
+            FROM players AS p
+            JOIN teams AS t
+              ON t.id = p.team_id
+            WHERE p.id = $playerId";
     var_dump($sql);
 
     return [
